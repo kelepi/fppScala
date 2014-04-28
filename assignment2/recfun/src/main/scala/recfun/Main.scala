@@ -10,10 +10,10 @@ object Main {
     //      println()
     //    }
 
-//    println("Balance")
-//    println("(if (zero? x) max (/ 1 x))")
-//    println(balance("(i(z)m(1))".toList))
-    //
+        println("Balance")
+        println("(if (zero? x) max (/ 1 x))")
+        println(balance("(i(z)m(1))".toList))
+    
     //    println("I told him (that it's not (yet) done).\n(But he wasn't listening)")
     //    println(balance("I told him (that it's not (yet) done).\n(But he wasn't listening)".toList))
     //
@@ -37,8 +37,18 @@ object Main {
   /**
    * Exercise 2
    */
-  def balance(chars: List[Char]): Boolean = {
-    def isBalance(chars: List[Char], left: Int): Boolean = {
+  def balance(chars: List[Char]): Boolean = { 
+    def balanceByTailRec(chars: List[Char], x: Int): Boolean = {
+         chars match {
+           case (Nil) => x == 0
+           case ('('::tail) => if( x == -1) balanceByTailRec(chars.tail, 1) else balanceByTailRec(chars.tail, x + 1) 
+           case (')'::tail) => balanceByTailRec(chars.tail, x - 1)
+           case (_::tail) => balanceByTailRec(chars.tail, x)
+         }
+      }  
+
+
+def isBalance(chars: List[Char], left: Int): Boolean = {
       if (!chars.isEmpty) {
         val head = chars.head
         val numLeft = if (head == '(') {
@@ -50,7 +60,21 @@ object Main {
       } else left == 0
     }
 
-    isBalance(chars, -1)
+def balanceByFold(chars: List[Char]): Boolean =
+      chars.foldLeft(-1) {
+        case (-1, ')') => return false
+        case (0, ')') => return false
+        case (x, ')') => x - 1
+        case (-1, '(') => 1
+        case (x, '(') => x + 1
+        case (x, _) => x
+      } == 0 && !chars.isEmpty
+
+
+      
+    //    isBalance(chars, -1)
+//    balanceByFold(chars)
+      if(chars.isEmpty) true else balanceByTailRec(chars, -1)
   }
 
   /**

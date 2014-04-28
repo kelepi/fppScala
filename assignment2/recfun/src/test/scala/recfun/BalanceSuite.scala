@@ -24,4 +24,53 @@ class BalanceSuite extends FunSuite {
   test("balance: counting is not enough") {
     assert(!balance("())(".toList))
   }
+  
+  test("balance: empty list") {
+    assert(balance("".toList))
+  }
+  
+  test("balance: all left parenthesis") {
+    assert(!balance(" (((".toList))
+  }
+  
+  test("balance: all right parenthesis") {
+    assert(!balance(" ) ))".toList))
+  }
+  
+  test("balance: words without parenthesis") {
+    assert(!balance(" ax kdu o23 !@#".toList))
+  }
+  
+  test("balance: 1 (") {
+    assert(!balance("(".toList))
+  }
+  
+  test("balance: 1 )") {
+    assert(!balance(")".toList))
+  }
+
+  test("balance: corner case") {
+    assert(balance("(asdf(asaff)((dsfa ((awer (afa()) sdf)))c va))".toList))
+  }
+  
+  test("balance: 1") {
+    assert(!balance(" ) )".toList))
+  }
+  
+  test("balance: 11") {
+    assert(!balance(" ( (".toList))
+  }
+  
+  test("balance: 111") {
+    assert(balance(" ( ) ()".toList))
+  }
+  
+  test("balance: 1111") {
+    assert(balance(" ( () )".toList))
+  }
+  
+  test("balance: 11111") {
+    assert(!balance(" ()((".toList))
+  }
+
 }
