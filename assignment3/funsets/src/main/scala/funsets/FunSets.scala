@@ -38,7 +38,7 @@ object FunSets {
    * Returns the difference of the two given sets,
    * the set of all elements of `s` that are not in `t`.
    */
-  def diff(s: Set, t: Set): Set = x => s(x) && !t(x)
+  def diff(s: Set, t: Set): Set = x => (s(x) && !t(x)) || (!s(x) && t(x))
 
   /**
    * Returns the subset of `s` for which `p` holds.
@@ -48,7 +48,7 @@ object FunSets {
   /**
    * The bounds for `forall` and `exists` are +/- 1000.
    */
-  val bound = 5
+  val bound = 1000
 
   /**
    * Returns whether all bounded integers within `s` satisfy `p`.
@@ -66,12 +66,12 @@ object FunSets {
    * Returns whether there exists a bounded integer within `s`
    * that satisfies `p`.
    */
-  def exists(s: Set, p: Int => Boolean): Boolean = forall(s, p)
+  def exists(s: Set, p: Int => Boolean): Boolean = !forall(s, x => !p(x))
 
   /**
    * Returns a set transformed by applying `f` to each element of `s`.
    */
-  def map(s: Set, f: Int => Int): Set = ???
+  def map(s: Set, f: Int => Int): Set = ??? // x => s(x) && s(f(x))
 
   /**
    * Displays the contents of a set
