@@ -16,7 +16,7 @@ object workSheet {
   printSet(uni)                                   //> {1,2,3,4,5,6,7,8,9,10,11,12}
 
   val dif = diff(gtZeroltTen, gtOneltThirteen)    //> dif  : Int => Boolean = <function1>
-  printSet(dif)                                   //> {1,10,11,12}
+  printSet(dif)                                   //> {1}
 
   val inter = intersect(gtZeroltTen, gtOneltThirteen)
                                                   //> inter  : Int => Boolean = <function1>
@@ -58,5 +58,13 @@ object workSheet {
   val mp = map(uni, x => x * 2)                   //> mp  : Int => Boolean = <function1>
   printSet(uni)                                   //> {1,2,3,4,5,6,7,8,9,10,11,12}
   printSet(mp)                                    //> {2,4,6,8,10,12,14,16,18,20,22,24}
-
+  
+  val la = Array()                                //> la  : Array[Nothing] = Array()
+  val lb = Array(2, 4, 5)                         //> lb  : Array[Int] = Array(2, 4, 5)
+  
+  print(la)                                       //> [Ljava.lang.Object;@19f21412
+  print(lb)                                       //> [I@6403b70c
+  
+  la == lb                                        //> res18: Boolean = false
+  la eq lb                                        //> res19: Boolean = false
 }
