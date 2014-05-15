@@ -52,11 +52,36 @@ object UsedForTest extends App {
   //  tsAB print
 
   // Test isInstanceOf
-  assert(tsA.isInstanceOf[Empty] == false, "tsA should be NonEmpty")
-  assert(tsA.isInstanceOf[NonEmpty] == true, "tsA should be NonEmpty")
-  assert(tsC.isInstanceOf[Empty] == true, "tsC should be Empty")
-  assert(tsC.isInstanceOf[NonEmpty] == false, "tsC should be Empty")
+//  assert(tsA.isInstanceOf[Empty] == false, "tsA should be NonEmpty")
+//  assert(tsA.isInstanceOf[NonEmpty] == true, "tsA should be NonEmpty")
 
-  // Test most influence tweets
+  // Test mostRetweeted
+  val aTweet = targetTweetsSet.mostRetweeted
+//  print(aTweet)
+  
+  // Test descendingByRetweet
+  val tl = targetTweetsSet.descendingByRetweet
+//  tl.foreach(print(_))
 
+  // Test in
+  def in(ll: List[String], tt: Tweet): Boolean = {
+     ll.exists(tt.text.contains(_))
+  }
+  
+//  assert(in(List("Apple", "Applex", "Applew", "Appleq", "Appleqq", "Applex"), new Tweet("Apple", "This is Apple", 12)) == true, "Should be true")
+//  assert(in(List("Apple", "Applex", "Applew", "Appleq", "Appleqq", "Applex"), new Tweet("Apple", "This is qer", 12)) == false, "Should be false")
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
