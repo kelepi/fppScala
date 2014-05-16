@@ -111,6 +111,9 @@ abstract class TweetSet {
    */
   def preTraverse(f: Tweet => Unit): Unit
   def print() = preTraverse(x => println(x.text))
+  def cas(tw: Tweet): Tweet
+  def goLeft(): TweetSet
+  def goRight(): TweetSet
 }
 
 class Empty extends TweetSet {
@@ -141,6 +144,11 @@ class Empty extends TweetSet {
   def mostRetweeted: Tweet = throw new java.util.NoSuchElementException()
 
   def descendingByRetweet: TweetList = Nil
+  
+  def cas(tw: Tweet): Tweet = tw
+  
+  def goLeft(): TweetSet = this
+  def goRight(): TweetSet = this
 }
 
 class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
@@ -192,16 +200,39 @@ class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
     right.preTraverse(f)
   }
 
-  def union(that: TweetSet): TweetSet = ((left union right) union that) incl elem
+  //  def union(that: TweetSet): TweetSet = ((left union right) union that) incl elem
+  def union(that: TweetSet): TweetSet = {
+    var ts: TweetSet = this
 
-  def mostRetweeted: Tweet = {
-    var tweet = elem
-    def compareAndSet(aTweet: Tweet): Unit = {
-      if (aTweet.retweets > tweet.retweets)
-        tweet = aTweet
+    def inclToTweetSet(tweet: Tweet): Unit = { ts = ts incl tweet }
+    that.foreach(inclToTweetSet(_))
+    ts
+  }
+
+  //  def mostRetweeted: Tweet = {
+  //    var tweet = elem
+  //    def compareAndSet(aTweet: Tweet): Unit = {
+  //      if (aTweet.retweets > tweet.retweets)
+  //        tweet = aTweet
+  //    }
+  //    this.foreach(compareAndSet(_))
+  //    tweet
+  //  }
+  def mostRetweeted: Tweet = mostRetweeted_(this, elem)
+
+  def cas(tw: Tweet): Tweet = if(this.elem.retweets > tw.retweets) this.elem else tw
+  def goLeft(): TweetSet = this.left
+  def goRight(): TweetSet = this.right
+  
+  def mostRetweeted_(ts: TweetSet, mt: Tweet): Tweet = {
+    if (!ts.isInstanceOf[NonEmpty]) {
+      mt
+    } else {
+      val t = ts.cas(mt)
+      val tl = mostRetweeted_(ts.goLeft(), t)
+      val tr = mostRetweeted_(ts.goRight(), tl)
+      tr
     }
-    foreach(compareAndSet(_))
-    tweet
   }
 
   def descendingByRetweet: TweetList = {
@@ -241,12 +272,12 @@ class Cons(val head: Tweet, val tail: TweetList) extends TweetList {
 
 object GoogleVsApple {
   val google = List("android", "Android", "galaxy", "Galaxy", "nexus", "Nexus")
-  val apple = List("ios", "iOS", "iphone", "iPhone", "ipad", "iPad") 
-  
+  val apple = List("ios", "iOS", "iphone", "iPhone", "ipad", "iPad")
+
   def in(ll: List[String], tt: Tweet): Boolean = {
-     ll.exists(tt.text.contains(_))
+    ll.exists(tt.text.contains(_))
   }
-  
+
   lazy val googleTweets: TweetSet = TweetReader.allTweets.filter(in(google, _))
   lazy val appleTweets: TweetSet = TweetReader.allTweets.filter(in(apple, _))
 

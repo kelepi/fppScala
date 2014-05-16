@@ -56,8 +56,8 @@ object UsedForTest extends App {
 //  assert(tsA.isInstanceOf[NonEmpty] == true, "tsA should be NonEmpty")
 
   // Test mostRetweeted
-  val aTweet = targetTweetsSet.mostRetweeted
-//  print(aTweet)
+  val aTweet = tsB.mostRetweeted
+  print(aTweet)
   
   // Test descendingByRetweet
   val tl = targetTweetsSet.descendingByRetweet

@@ -69,4 +69,17 @@ class TweetSetSuite extends FunSuite {
       assert(trends.head.user == "a" || trends.head.user == "b")
     }
   }
+
+  test("filter and union: 7 and 9 retweets") {
+    new TestSets {
+      assert(size(set5.filter(tw => tw.retweets == 7).union(set5.filter(tw => tw.retweets == 9))) == 2)
+    }
+  }
+
+  test("most retweeted") {
+    new TestSets {
+      val aTweet = TweetReader.getTweetSet("gizmodo").mostRetweeted
+      assert(aTweet.retweets == 321)
+    }
+  }
 }
