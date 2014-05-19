@@ -1,16 +1,9 @@
 package patmat
 
-/**
- * Created with IntelliJ IDEA.
- * User: yf_liu
- * Date: 14-5-19
- * Time: 下午2:54
- */
-
 import Huffman._
 
-object test extends App {
-  // Practice 1
+object HuffmanTrigger extends App {
+// Practice 1
   val left = Leaf('A', 10)
   val right = Leaf('C', 12)
   val fork = makeCodeTree(left, right)
@@ -68,7 +61,7 @@ object test extends App {
   println("ct after map = " + cd)
 
   println(convert(codeTree))
-  println(convert2(codeTree))
+//  println(convert2(codeTree))
 
   println(quickEncode(codeTree)(string2Chars("abcde")))
 }
