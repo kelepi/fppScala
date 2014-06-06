@@ -262,7 +262,7 @@ object Huffman {
    * Recursive method without mergeCodeTable
    *
    */
-  def convert2(tree: CodeTree): CodeTable = {
+  /*def convert2(tree: CodeTree): CodeTable = {
     var ct = List[(Char, List[Bit])]()
 
     def add(char: Char, bits: List[Bit]): Unit = {
@@ -280,7 +280,7 @@ object Huffman {
     }
     convertInternal(tree, List())
     ct
-  }
+  }*/
 
   def convert(tree: CodeTree): CodeTable = tree match {
     case Leaf(char, weight) => List((char, List()))
